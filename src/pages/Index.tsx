@@ -14,6 +14,7 @@ import FeaturedProductsSection from '@/components/sections/FeaturedProductsSecti
 import TestimonialsSection from '@/components/sections/TestimonialsSection';
 import StatsSection from '@/components/sections/StatsSection';
 import NewsletterSection from '@/components/sections/NewsletterSection';
+import Layout from "@/components/layout/Layout";
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -149,7 +150,7 @@ const Index = () => {
       location: "Hà Nội",
       rating: 5,
       comment: "Cà phê Đắk Lắk ở đây thật sự rất ngon, hương vị đậm đà và thơm ngon. Đã mua nhiều lần và luôn hài lòng với chất lượng.",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b512?w=100&h=100&fit=crop&crop=face"
+      avatar: "https://images.unsplash.com/photo-9K5MhlXbWGU?w=100&h=100&fit=crop&crop=face"
     },
     {
       id: 2,
@@ -198,9 +199,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white">
-      <Header />
-      
+    <Layout>
       <HeroBanner />
       <FeaturesSection />
       <CategoriesSection />
@@ -208,9 +207,7 @@ const Index = () => {
       <TestimonialsSection />
       <StatsSection />
       <NewsletterSection />
-      
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

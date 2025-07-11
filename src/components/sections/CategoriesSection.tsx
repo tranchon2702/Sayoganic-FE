@@ -89,7 +89,7 @@ const CategoriesSection = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {isLoading ? renderSkeletons() : visibleCategories.map((category) => (
-              <Link key={category.id} to={`/products/category/${category.slug}`}>
+              <Link key={category.id} to={`/products/${category.slug}`}>
                 <Card className="group overflow-hidden hover:shadow-elegant transition-all duration-500 animate-scale-in rounded-2xl border-0 shadow-soft">
                   <div className="relative">
                     <img

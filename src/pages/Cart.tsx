@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
 import { toast } from 'sonner';
+import Layout from "@/components/layout/Layout";
 
 const Cart = () => {
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice, isLoading } = useCart();
@@ -34,8 +35,7 @@ const Cart = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen">
-        <Header />
+      <Layout>
         <div className="container mx-auto px-4 py-16">
           <div className="text-center space-y-6">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0d6938] mx-auto"></div>
@@ -47,15 +47,13 @@ const Cart = () => {
             </p>
           </div>
         </div>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen">
-        <Header />
+      <Layout>
         <div className="container mx-auto px-4 py-16">
           <div className="text-center space-y-6">
             <ShoppingBag className="w-24 h-24 text-gray-300 mx-auto" />
@@ -70,14 +68,12 @@ const Cart = () => {
             </Button>
           </div>
         </div>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="min-h-screen">
-      <Header />
+    <Layout>
       
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
@@ -232,9 +228,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

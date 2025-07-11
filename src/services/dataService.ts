@@ -7,27 +7,27 @@ export class DataService {
     return [
       {
         id: 1,
-        image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop",
-        title: "Cà phê Arabica Đắk Lắk",
-        subtitle: "Hương vị đậm đà từ núi rừng Tây Nguyên",
+        image: "/image/chuoihotrung.jpeg",
+        title: "Chuối Hột Rừng Sấy Tây Nguyên - Tinh Túy Đại Ngàn",
+        subtitle: "Vị ngọt tự nhiên, giàu chất xơ và khoáng chất từ rừng già Tây Nguyên",
         cta: "Khám phá ngay",
-        link: "/products/coffee"
+        link: "/products/dried-fruit"
       },
       {
         id: 2,
-        image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=1200&h=600&fit=crop",
-        title: "Chè shan tuyết cổ thụ",
-        subtitle: "Trà nguyên chất từ vùng cao Tây Bắc",
+        image: "/image/macca.jpg",
+        title: "Hạt Macca Organic - Vàng Trắng Từ Đất Bazan",
+        subtitle: "Thơm béo tự nhiên, giàu dưỡng chất, thu hoạch và chế biến thủ công",
         cta: "Xem sản phẩm",
-        link: "/products/tea"
+        link: "/products/nuts"
       },
       {
         id: 3,
-        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=600&fit=crop",
-        title: "Mật ong rừng nguyên chất",
-        subtitle: "Thu hoạch từ tổ ong tự nhiên",
+        image: "/image/ruou.png",
+        title: "Rượu Chuối Hột Rừng - Tinh Hoa Nhiều Năm Ủ Mùi",
+        subtitle: "Hương thơm quyến rũ, vị ngọt thanh tao, sản xuất theo phương pháp truyền thống",
         cta: "Mua ngay",
-        link: "/products/honey"
+        link: "/products/wine"
       }
     ];
   }
@@ -37,39 +37,67 @@ export class DataService {
       {
         id: "1",
         name: "Cà phê Arabica Đắk Lắk",
+        slug: "ca-phe-arabica-dak-lak",
         price: 250000,
         originalPrice: 300000,
         image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop",
-        category: "Cà phê",
+        category: {
+          id: "1",
+          name: "Cà phê",
+          slug: "coffee",
+          description: "Cà phê nguyên chất từ Tây Nguyên"
+        },
         rating: 4.8,
-        isHot: true
+        isHot: true,
+        images: []
       },
       {
         id: "2", 
         name: "Chè shan tuyết cổ thụ",
+        slug: "che-shan-tuyet-co-thu",
         price: 180000,
         image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop",
-        category: "Chè",
+        category: {
+          id: "2",
+          name: "Chè",
+          slug: "tea",
+          description: "Chè nguyên chất từ vùng cao Tây Bắc"
+        },
         rating: 4.9,
-        isNew: true
+        isNewProduct: true,
+        images: []
       },
       {
         id: "3",
         name: "Tiêu đen Phú Quốc",
+        slug: "tieu-den-phu-quoc",
         price: 120000,
         originalPrice: 150000,
         image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=300&fit=crop",
-        category: "Gia vị",
-        rating: 4.7
+        category: {
+          id: "3",
+          name: "Gia vị",
+          slug: "spices",
+          description: "Gia vị tự nhiên từ Phú Quốc"
+        },
+        rating: 4.7,
+        images: []
       },
       {
         id: "4",
         name: "Mật ong rừng nguyên chất",
+        slug: "mat-ong-rung-nguyen-chat",
         price: 350000,
         image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
-        category: "Mật ong",
+        category: {
+          id: "4",
+          name: "Mật ong",
+          slug: "honey",
+          description: "Mật ong thu hoạch từ rừng tự nhiên"
+        },
         rating: 4.9,
-        isHot: true
+        isHot: true,
+        images: []
       }
     ];
   }
@@ -77,25 +105,37 @@ export class DataService {
   static getCategories(): Category[] {
     return [
       {
+        id: "1",
         name: "Cà phê",
+        slug: "coffee",
+        description: "Cà phê nguyên chất từ Tây Nguyên",
         image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=300&h=200&fit=crop",
         link: "/products/coffee",
         count: 25
       },
       {
+        id: "2",
         name: "Chè",
+        slug: "tea",
+        description: "Chè nguyên chất từ vùng cao Tây Bắc",
         image: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=300&h=200&fit=crop",
         link: "/products/tea",
         count: 18
       },
       {
+        id: "3",
         name: "Gia vị",
+        slug: "spices",
+        description: "Gia vị tự nhiên từ Phú Quốc",
         image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=200&fit=crop",
         link: "/products/spices",
         count: 32
       },
       {
+        id: "4",
         name: "Mật ong",
+        slug: "honey",
+        description: "Mật ong thu hoạch từ rừng tự nhiên",
         image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop",
         link: "/products/honey",
         count: 12
@@ -139,24 +179,24 @@ export class DataService {
         name: "Nguyễn Thị Lan",
         location: "Hà Nội",
         rating: 5,
-        comment: "Cà phê Đắk Lắk ở đây thật sự rất ngon, hương vị đậm đà và thơm ngon. Đã mua nhiều lần và luôn hài lòng với chất lượng.",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b512?w=100&h=100&fit=crop&crop=face"
+        comment: "Chuối Sấy ở đây thật sự rất ngon, hương vị đậm đà và thơm ngon. Đã mua nhiều lần và luôn hài lòng với chất lượng.",
+        avatar: "https://images.unsplash.com/photo-1750231211588-53a860ea7b4b?w=200&h=200&fit=crop&crop=face"
       },
       {
         id: 2,
         name: "Trần Văn Minh",
         location: "TP. Hồ Chí Minh",
         rating: 5,
-        comment: "Mật ong rừng nguyên chất, vị ngọt tự nhiên và rất tốt cho sức khỏe. Giao hàng nhanh, đóng gói cẩn thận.",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+        comment: "Rượu chuối ngâm có hương vị rất đặc biệt, uống một lần là nhớ mãi. Sẽ tiếp tục ủng hộ shop.",
+        avatar: "https://images.unsplash.com/photo-1634716700084-4eee747627d6?w=100&h=100&fit=crop&crop=face"
       },
       {
         id: 3,
         name: "Lê Thị Hương",
         location: "Đà Nẵng",
         rating: 5,
-        comment: "Chè shan tuyết có hương vị rất đặc biệt, uống một lần là nhớ mãi. Sẽ tiếp tục ủng hộ shop.",
-        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+        comment: "Mật ong rừng nguyên chất, vị ngọt tự nhiên và rất tốt cho sức khỏe. Giao hàng nhanh, đóng gói cẩn thận.",
+        avatar: "https://images.unsplash.com/photo-1742402281952-432c2416d7fe?w=100&h=100&fit=crop&crop=face"
       }
     ];
   }

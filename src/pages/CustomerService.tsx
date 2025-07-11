@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Phone, Mail, MessageCircle, Clock, Award, Shield, Truck, HeartHandshake, ChevronDown, ChevronUp } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from "@/components/layout/Layout";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -48,14 +47,14 @@ const CustomerService = () => {
     {
       icon: Phone,
       title: "Hotline",
-      info: "0123 456 789",
-      subtitle: "Miễn phí từ 8:00 - 22:00",
+      info: "0869415919",
+      subtitle: "Hỗ trợ 24/7",
       color: "bg-[#0d6938]"
     },
     {
       icon: Mail,
       title: "Email",
-      info: "support@taynguyenfood.vn",
+      info: "sayoganic365@gmail.com",
       subtitle: "Phản hồi trong 24h",
       color: "bg-[#0d6938]"
     },
@@ -117,9 +116,7 @@ const CustomerService = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white">
-      <Header />
-      
+    <Layout>
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-r from-[#0d6938]/10 to-[#0d6938]/5">
         <div className="container mx-auto px-4">
@@ -333,9 +330,7 @@ const CustomerService = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

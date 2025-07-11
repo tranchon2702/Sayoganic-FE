@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from "@/components/layout/Layout";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -69,9 +68,7 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      
+    <Layout>
       {/* Hero Section */}
       <section className="relative h-64 bg-gradient-to-r from-[#0d6938] to-[#0b4e29]">
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
@@ -245,9 +242,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

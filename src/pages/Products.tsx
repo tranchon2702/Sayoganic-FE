@@ -13,6 +13,7 @@ import { Product, Category } from '@/types';
 import api from '@/lib/api';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardContent } from '@/components/ui/card';
+import Layout from "@/components/layout/Layout";
 
 const Products = () => {
   const { category: categorySlug } = useParams();
@@ -29,6 +30,11 @@ const Products = () => {
   const [priceRange, setPriceRange] = useState([0, 1000000]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  // Scroll to top when component mounts or when category/search changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [categorySlug, searchQuery]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -122,20 +128,16 @@ const Products = () => {
   
   if (error) {
     return (
-      <div className="min-h-screen">
-        <Header />
+      <Layout>
         <div className="container mx-auto px-4 py-8 text-center">
           <p className="text-red-500">{error}</p>
         </div>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      
+    <Layout>
       <div className="container mx-auto px-4 py-8">
         {/* Page header */}
         <div className="mb-8">
@@ -318,9 +320,7 @@ const Products = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

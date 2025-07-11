@@ -1,5 +1,4 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Layout from "@/components/layout/Layout";
 import { Leaf, Users, Award, Heart } from 'lucide-react';
 
 const About = () => {
@@ -48,9 +47,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      
+    <Layout>
       {/* Hero Section */}
       <section className="relative h-96 bg-gradient-to-r from-[#0d6938] to-[#0b4e29]">
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
@@ -75,20 +72,20 @@ const About = () => {
                 Khởi nguồn từ tình yêu đất mẹ
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Sayoganic365 được thành lập vào năm 2010 với khát vọng mang những sản phẩm 
+                Sayoganic365 được thành lập vào năm 2024 với khát vọng mang những sản phẩm 
                 tinh hoa từ vùng đất Tây Nguyên đến với mọi người. Chúng tôi bắt đầu từ một 
-                trang trại cà phê nhỏ ở Đắk Lắk và dần mở rộng để trở thành một trong những 
+                trang trại chuối và cà phê nhỏ ở Lâm Đồng và dần mở rộng để trở thành một trong những 
                 thương hiệu uy tín về thực phẩm sạch.
               </p>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Với hơn 13 năm kinh nghiệm, chúng tôi đã xây dựng mạng lưới hợp tác với hơn 
+                Với hơn 2 năm kinh nghiệm, chúng tôi đã xây dựng mạng lưới hợp tác với hơn 
                 500 nông hộ địa phương, cam kết mang đến những sản phẩm chất lượng cao nhất 
                 từ vùng đất bazan đỏ màu mỡ.
               </p>
             </div>
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1544966503-7cc5ac882d2a?w=600&h=400&fit=crop"
+                src="https://images.unsplash.com/photo-1648320750202-ca131bae7aca?w=600&h=400&fit=crop"
                 alt="Tây Nguyên landscape"
                 className="rounded-lg shadow-lg"
               />
@@ -156,27 +153,25 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-2">
-              <h3 className="text-4xl font-bold">500+</h3>
+              <h3 className="text-4xl font-bold">300+</h3>
               <p className="text-lg">Nông hộ hợp tác</p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-4xl font-bold">100,000+</h3>
+              <h3 className="text-4xl font-bold">10,000+</h3>
               <p className="text-lg">Khách hàng tin tưởng</p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-4xl font-bold">50+</h3>
+              <h3 className="text-4xl font-bold">30+</h3>
               <p className="text-lg">Sản phẩm chất lượng</p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-4xl font-bold">13+</h3>
+              <h3 className="text-4xl font-bold">2+</h3>
               <p className="text-lg">Năm kinh nghiệm</p>
             </div>
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

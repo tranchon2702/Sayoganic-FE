@@ -7,6 +7,8 @@ export interface Category {
   slug: string;
   description: string;
   image?: string;
+  link?: string; // Add link property
+  count?: number; // Add count property
 }
 
 export interface NewsCategory {

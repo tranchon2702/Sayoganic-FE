@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight, Search, Loader2 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -10,14 +10,37 @@ import api from '@/lib/api';
 import { NewsItem, NewsCategory } from '@/types';
 import { toast } from 'sonner';
 import getImageUrl from '@/utils/imageUrl';
+import Layout from "@/components/layout/Layout";
+
+// Define a type for the raw news item from the API
+interface NewsItemRaw {
+  _id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  image?: string;
+  createdAt: string;
+  author: string;
+  category: string | { _id?: string; id?: string; name?: string; slug?: string };
+  slug: string;
+}
 
 const News = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category') || '';
+  const searchQuery = searchParams.get('search') || '';
+
   const [newsArticles, setNewsArticles] = useState<NewsItem[]>([]);
   const [categories, setCategories] = useState<NewsCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingCategories, setLoadingCategories] = useState(true);
+  const [searchInput, setSearchInput] = useState(searchQuery);
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam);
+
+  // Scroll to top when component mounts or when filter parameters change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [categoryParam, searchQuery]);
 
   // Fetch news categories from API
   useEffect(() => {
@@ -43,31 +66,38 @@ const News = () => {
       try {
         setLoading(true);
         const response = await api.get('/news');
-        setNewsArticles(response.data.news.map((item: {
-          _id: string;
-          title: string;
-          excerpt: string;
-          content: string;
-          image?: string;
-          createdAt: string;
-          author: string;
-          category: any;
-          slug: string;
-        }) => ({
-          id: item._id,
-          title: item.title,
-          excerpt: item.excerpt,
-          content: item.content,
-          image: item.image ? getImageUrl(item.image) : 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop',
-          publishedAt: item.createdAt,
-          author: item.author,
-          category: typeof item.category === 'string' ? item.category : (item.category?._id || item.category?.id),
-          categoryName: typeof item.category === 'string' ? '' : item.category?.name,
-          slug: item.slug
-        })));
+        console.log('News data:', response.data);
+        
+        // Check if response.data is an array or an object with a news property
+        const newsData = Array.isArray(response.data) ? response.data : 
+                        (response.data.news ? response.data.news : []);
+        
+        console.log('Processed news data:', newsData);
+        
+        if (newsData.length > 0) {
+          const mappedNews = newsData.map((item: NewsItemRaw) => ({
+            id: item._id,
+            title: item.title,
+            excerpt: item.excerpt || '',
+            content: item.content,
+            image: item.image ? getImageUrl(item.image) : 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop',
+            publishedAt: item.createdAt,
+            author: item.author || 'Admin',
+            category: typeof item.category === 'string' ? item.category : (item.category?._id || item.category?.id || ''),
+            categoryName: typeof item.category === 'string' ? '' : (item.category?.name || ''),
+            slug: item.slug
+          }));
+          
+          console.log('Mapped news:', mappedNews);
+          setNewsArticles(mappedNews);
+        } else {
+          console.log('No news data found in the response');
+          setNewsArticles([]);
+        }
       } catch (error) {
         console.error('Error fetching news:', error);
         toast.error('Không thể tải tin tức. Vui lòng thử lại sau.');
+        setNewsArticles([]);
       } finally {
         setLoading(false);
       }
@@ -76,16 +106,24 @@ const News = () => {
     fetchNews();
   }, []);
 
-  const filteredArticles = newsArticles.filter(article => {
-    const matchesCategory = selectedCategory === 'all' || 
+  // Apply filters to articles
+  const allFilteredArticles = newsArticles.filter(article => {
+    const matchesCategory = selectedCategory === 'all' || selectedCategory === '' || 
       categories.find(cat => (cat._id === article.category || cat.id === article.category) && cat.slug === selectedCategory);
-    const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = !searchQuery || 
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const featuredArticle = newsArticles.length > 0 ? newsArticles[0] : null;
-  const regularArticles = newsArticles.length > 1 ? newsArticles.slice(1) : [];
+  console.log('Filtered articles:', allFilteredArticles);
+
+  // Select featured article and regular articles
+  const featuredArticle = allFilteredArticles.length > 0 ? allFilteredArticles[0] : null;
+  const regularArticles = allFilteredArticles.length > 1 ? allFilteredArticles.slice(1) : [];
+
+  console.log('Featured article:', featuredArticle);
+  console.log('Regular articles:', regularArticles);
 
   // Function to estimate read time based on content length
   const getReadTime = (content: string) => {
@@ -102,9 +140,7 @@ const News = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-warm-50 to-white">
-      <Header />
-      
+    <Layout>
       {/* Hero Section */}
       <section className="py-16 bg-gradient-to-r from-[#0d6938]/10 to-[#0d6938]/5">
         <div className="container mx-auto px-4">
@@ -128,23 +164,34 @@ const News = () => {
               <Input
                 type="search"
                 placeholder="Tìm kiếm bài viết..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setSearchParams({ search: searchInput, category: categoryParam });
+                  }
+                }}
                 className="pr-10"
               />
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search 
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 cursor-pointer"
+                onClick={() => setSearchParams({ search: searchInput, category: categoryParam })}
+              />
             </div>
 
             {/* Categories */}
             <div className="flex flex-wrap gap-2">
               <Button
                 key="all"
-                variant={selectedCategory === 'all' ? "default" : "outline"}
+                variant={selectedCategory === 'all' || selectedCategory === '' ? "default" : "outline"}
                 size="sm"
-                onClick={() => setSelectedCategory('all')}
+                onClick={() => {
+                  setSelectedCategory('all');
+                  setSearchParams({ search: searchInput, category: '' });
+                }}
                 className={
                   `rounded-full transition-colors duration-200 ` +
-                  (selectedCategory === 'all'
+                  (selectedCategory === 'all' || selectedCategory === ''
                     ? "bg-[#0d6938] text-white hover:bg-[#095127] border-[#0d6938]"
                     : "border-[#0d6938] text-[#0d6938] hover:bg-[#e6f4ec] hover:text-[#095127]")
                 }
@@ -162,7 +209,10 @@ const News = () => {
                     key={category._id || category.id}
                     variant={selectedCategory === category.slug ? "default" : "outline"}
                     size="sm"
-                    onClick={() => setSelectedCategory(category.slug)}
+                    onClick={() => {
+                      setSelectedCategory(category.slug);
+                      setSearchParams({ search: searchInput, category: category.slug });
+                    }}
                     className={
                       `rounded-full transition-colors duration-200 ` +
                       (selectedCategory === category.slug
@@ -183,6 +233,11 @@ const News = () => {
         <div className="py-24 flex justify-center items-center">
           <Loader2 className="w-8 h-8 animate-spin text-[#0d6938]" />
           <span className="ml-2 text-lg">Đang tải tin tức...</span>
+        </div>
+      ) : newsArticles.length === 0 ? (
+        <div className="py-24 text-center">
+          <h2 className="text-2xl font-bold text-gray-700 mb-4">Không tìm thấy bài viết nào</h2>
+          <p className="text-gray-500">Hiện chưa có bài viết nào được đăng tải. Vui lòng quay lại sau.</p>
         </div>
       ) : (
         <>
@@ -242,9 +297,9 @@ const News = () => {
           <section className="py-12 bg-gray-50">
             <div className="container mx-auto px-4">
               <h2 className="text-3xl font-bold text-gray-900 font-serif mb-8">Tất cả bài viết</h2>
-              {filteredArticles.length > 0 ? (
+              {regularArticles.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {filteredArticles.map((article, index) => (
+                  {regularArticles.map((article, index) => (
                     <Card key={article.id} className="overflow-hidden hover:shadow-elegant transition-all duration-500 animate-scale-in group rounded-2xl border-0 shadow-soft" style={{ animationDelay: `${index * 0.1}s` }}>
                       <div className="relative">
                         <img
@@ -254,7 +309,7 @@ const News = () => {
                         />
                         <div className="absolute top-4 right-4">
                           <span className="bg-[#0d6938] text-white px-2 py-1 rounded-full text-xs font-medium capitalize">
-                            {article.categoryName || getCategoryName(article.category)}
+                            {article.categoryName || getCategoryName(article.category as string)}
                           </span>
                         </div>
                       </div>
@@ -299,9 +354,7 @@ const News = () => {
           </section>
         </>
       )}
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
