@@ -56,18 +56,25 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="#" 
-                className="text-gray-400 hover:text-primary transition-colors"
+                href="https://www.facebook.com/profile.php?id=61578225652028&locale=vi_VN" 
+                target="_blank" 
+                rel="noopener noreferrer" 
                 aria-label="Facebook"
               >
                 <Facebook className="w-4 h-4 sm:w-5 sm:h-5" />
               </a>
               <a 
-                href="#" 
-                className="text-gray-400 hover:text-primary transition-colors"
-                aria-label="Instagram"
+                href="https://www.tiktok.com/@sayoganic365?_r=1&_d=secCgYIASAHKAESPgo8%2BHCjy6rIhTPJfcram7%2FwOmB6CEgez1MViPiTRxgCXzw3Pt3WCB1wRJlzMLPQKHIIjrqlV195LU%2BNLtxXGgA%3D&_svg=1&checksum=a3706a29e5faebae225252d407cd39364ec23077b39c107cff21da146b1440ec&sec_uid=MS4wLjABAAAA-kKlD4iYuVgmdlZ3PdcQki9EQ_j0St7r6umFaaeCsbTKmlY6v7npfwIgNcVi_J3r&sec_user_id=MS4wLjABAAAA-kKlD4iYuVgmdlZ3PdcQki9EQ_j0St7r6umFaaeCsbTKmlY6v7npfwIgNcVi_J3r&share_app_id=1180&share_author_id=7515467263643141137&share_link_id=E30F9E63-9D02-4014-A669-CD33EB5EB4FC&share_scene=1&sharer_language=vi&social_share_type=4&source=h5_t&timestamp=1752240984&tt_from=copy&u_code=eklfjdj4cbmg6b&ug_btm=b8727%2Cb0&user_id=7515467263643141137&utm_campaign=client_share&utm_medium=ios&utm_source=copy" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="TikTok"
               >
-                <Instagram className="w-4 h-4 sm:w-5 sm:h-5" />
+                {/* TikTok SVG icon chuẩn */}
+                <svg width="24" height="24" viewBox="0 0 48 48" fill="none">
+                  <path d="M41 17.5c-3.6 0-6.5-2.9-6.5-6.5V6.5H29v24.7c0 3.2-2.6 5.8-5.8 5.8s-5.8-2.6-5.8-5.8 2.6-5.8 5.8-5.8c.3 0 .7 0 1 .1v-5.1c-.3 0-.7-.1-1-.1-6 0-10.8 4.8-10.8 10.8S17.2 42 23.2 42s10.8-4.8 10.8-10.8V23c1.8 1.1 3.9 1.8 6.1 1.8h.9v-7.3h-1z" fill="#000"/>
+                  <path d="M41 17.5c-3.6 0-6.5-2.9-6.5-6.5V6.5H29v24.7c0 3.2-2.6 5.8-5.8 5.8s-5.8-2.6-5.8-5.8 2.6-5.8 5.8-5.8c.3 0 .7 0 1 .1v-5.1c-.3 0-.7-.1-1-.1-6 0-10.8 4.8-10.8 10.8S17.2 42 23.2 42s10.8-4.8 10.8-10.8V23c1.8 1.1 3.9 1.8 6.1 1.8h.9v-7.3h-1z" fill="#25F4EE"/>
+                  <path d="M41 17.5c-3.6 0-6.5-2.9-6.5-6.5V6.5H29v24.7c0 3.2-2.6 5.8-5.8 5.8s-5.8-2.6-5.8-5.8 2.6-5.8 5.8-5.8c.3 0 .7 0 1 .1v-5.1c-.3 0-.7-.1-1-.1-6 0-10.8 4.8-10.8 10.8S17.2 42 23.2 42s10.8-4.8 10.8-10.8V23c1.8 1.1 3.9 1.8 6.1 1.8h.9v-7.3h-1z" fill="#FE2C55" fill-opacity=".5"/>
+                </svg>
               </a>
               <a 
                 href="#" 
