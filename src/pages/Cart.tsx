@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useCart } from '@/contexts/CartContext';
 import { toast } from 'sonner';
 import Layout from "@/components/layout/Layout";
+import getImageUrl from '@/utils/imageUrl';
 
 const Cart = () => {
   const { items, updateQuantity, removeFromCart, clearCart, getTotalPrice, isLoading } = useCart();
@@ -108,7 +109,7 @@ const Cart = () => {
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-4">
                     <img
-                      src={item.image}
+                      src={item.image ? getImageUrl(item.image) : 'https://via.placeholder.com/300x300?text=No+Image'}
                       alt={item.name}
                       className="w-20 h-20 object-cover rounded-md"
                     />
